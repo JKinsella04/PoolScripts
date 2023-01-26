@@ -1,4 +1,3 @@
-# Variables
 # Total shots
 # Made balls
 # Scratches
@@ -7,11 +6,15 @@
 # (Made Balls + 0.5(Balls made off break) - 0.5(Scratches)) / Total shots 
 # Path: qualifier.py
 
+import sys
+import os
+import pandas as pd
+
+
 def calc():
     return (shotsMade + 0.5*bobs - 0.5*scratches)/totalShots
 
 name = input("Enter the name of the player: ")
-
 
 shotsMade = 0 
 scratches = 0 
@@ -43,3 +46,14 @@ while(roundsLeft):
             print("Current ranking: " + str(round(calc(), 3)))
             newRound = True
             roundsLeft -= 1
+# Output to csv file with pandas
+# Open qualifier.csv
+# Append new row with new player
+
+df = pd.read_csv("qualifier.csv")
+df = df.append({"Name": name, "Ranking": calc()}, ignore_index=True)
+df.to_csv("qualifier.csv", index=False)
+    
+
+
+    
